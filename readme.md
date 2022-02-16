@@ -1,23 +1,23 @@
 [<img src="https://assets.arc.codes/architect-logo-500b@2x.png" width=500>](https://www.npmjs.com/package/@architect/architect)
 
-## [`@architect/macro-storage-public`](https://www.npmjs.com/package/@architect/macro-storage-public)
+## [`@architect/plugin-storage-public`](https://www.npmjs.com/package/@architect/plugin-storage-public)
 
-> Architect serverless framework macro that defines any number of arbitrary **public** S3 buckets for your application
+> Architect serverless framework plugin that defines any number of arbitrary **public** S3 buckets for your application
 
-[`@architect/macro-storage-public`](https://www.npmjs.com/package/@architect/macro-storage-public) provisions **public** S3 buckets for your application. If you need to provision **private** S3 buckets, check out [`@architect/macro-storage-private`](https://www.npmjs.com/package/@architect/macro-storage-private).
+[`@architect/plugin-storage-public`](https://www.npmjs.com/package/@architect/plugin-storage-public) provisions **public** S3 buckets for your application. If you need to provision **private** S3 buckets, check out [`@architect/plugin-storage-private`](https://www.npmjs.com/package/@architect/plugin-storage-private).
 
 
 ## Installation
 
-1. Run: `npm i @architect/macro-storage-public`
+1. Run: `npm i @architect/plugin-storage-public`
 
-2. Then add the following line to the `@macros` pragma in your Architect project manifest (usually `.arc`):
+2. Then add the following line to the `@plugins` pragma in your Architect project manifest (usually `.arc`):
 
-> Note, no `@` in the macro name!
+> Note, no `@` in the plugin name!
 
 ```
-@macros
-architect/macro-storage-public
+@plugins
+architect/plugin-storage-public
 ```
 
 3. Add a new `@storage-public` pragma

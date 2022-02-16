@@ -1,7 +1,8 @@
 let { toLogicalID } = require('@architect/utils')
 let validate = require('./validate')
 
-module.exports = function storage (arc, cfn) {
+function start ({ arc, cloudformation }) {
+  let cfn = cloudformation
 
   let storagePublic = arc['storage-public']
 
@@ -38,6 +39,7 @@ module.exports = function storage (arc, cfn) {
       let Bucket = `${ID}Bucket`
       let BucketParam = `${ID}Param`
 
+      // TODO: implement deploy.services integration
       // Add bucket name as a "ARC_STORAGE_PUBLIC_<bucketname>" env var to all Lambda functions
       resKeys.forEach((k) => {
         let BUCKET = `ARC_STORAGE_PUBLIC_${bucket.replace(/-/g, '_').toUpperCase()}`
@@ -100,3 +102,5 @@ module.exports = function storage (arc, cfn) {
 
   return cfn
 }
+
+module.exports = { deploy: { start } }
