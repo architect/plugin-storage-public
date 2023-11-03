@@ -38,6 +38,7 @@ function start ({ arc, cloudformation }) {
       let ID = toLogicalID(bucket)
       let Bucket = `${ID}Bucket`
       let BucketParam = `${ID}Param`
+      let BucketPolicy = `${ID}Policy`
 
       // TODO: implement deploy.services integration
       // Add bucket name as a "ARC_STORAGE_PUBLIC_<bucketname>" env var to all Lambda functions
@@ -53,7 +54,6 @@ function start ({ arc, cloudformation }) {
         Type: 'AWS::S3::Bucket',
         DeletionPolicy: 'Delete',
         Properties: {
-          AccessControl: 'PublicRead',
           PublicAccessBlockConfiguration: {
             // Displayed as: 'Block public access to buckets and objects granted through new access control lists (ACLs)'
             BlockPublicAcls: false,
@@ -62,7 +62,12 @@ function start ({ arc, cloudformation }) {
             // Displayed as: 'Block public access to buckets and objects granted through any access control lists (ACLs)'
             IgnorePublicAcls: false,
             // Displayed as: 'Block public and cross-account access to buckets and objects through any public bucket or access point policies'
-            RestrictPublicBuckets: false
+            RestrictPublicBuckets: false,
+          },
+          OwnershipControls: {
+            Rules: [ {
+              ObjectOwnership: 'BucketOwnerEnforced',
+            } ]
           },
         }
       }
@@ -79,6 +84,31 @@ function start ({ arc, cloudformation }) {
             ]
           },
           Value: { Ref: Bucket }
+        }
+      }
+
+      // Allow public read access to all objects in the static bucket
+      cfn.Resources[BucketPolicy] = {
+        Type: 'AWS::S3::BucketPolicy',
+        Properties: {
+          Bucket: { Ref: Bucket },
+          PolicyDocument: {
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Action: [ 's3:GetObject' ],
+                Effect: 'Allow',
+                Principal: '*',
+                Resource: [ {
+                  'Fn::Sub': [
+                    'arn:aws:s3:::${bucket}/*',
+                    { bucket: { Ref: Bucket } }
+                  ]
+                } ],
+                Sid: 'PublicReadGetObject'
+              }
+            ]
+          }
         }
       }
 
