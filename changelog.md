@@ -1,4 +1,10 @@
-# Architect macro-storage-public changelog
+# Architect plugin-storage-public changelog
+
+---
+
+## [1.0.1] 2022-02-15
+
+Ported to Arc 10's plugin API and re-launched as `@architect/plugin-storage-public`!
 
 ---
 
