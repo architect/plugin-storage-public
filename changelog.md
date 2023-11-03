@@ -2,6 +2,19 @@
 
 ---
 
+## [1.0.2] 2023-11-02
+
+### Changed
+
+- Updated CI
+
+
+### Fixed
+
+- Fix S3's public bucket / policy breakage
+
+---
+
 ## [1.0.1] 2022-02-15
 
 Ported to Arc 10's plugin API and re-launched as `@architect/plugin-storage-public`!
